@@ -36,7 +36,12 @@ defmodule Scout.Schemas.Schema do
   """
   embedded_schema do
     field!(:module_name, :string, map: Module.concat([String.capitalize(module_name)]))
-    field(:description, :string)
+
+    field(:description, :string,
+      doc:
+        "A description of the schema. Semantically describes the schema in general. Does not go into field-specific details."
+    )
+
     embeds_many(:fields, Field)
     embeds_many(:embeds, Embed)
   end

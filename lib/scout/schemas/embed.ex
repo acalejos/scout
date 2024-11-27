@@ -15,6 +15,12 @@ defmodule Scout.Schemas.Embed do
     field!(:module_name, :string, doc: "The name of the embedded module to create.")
     field!(:cardinality, Ecto.Enum, values: [:one, :many])
     field(:required, :boolean, default: false)
+
+    field!(:description, :string,
+      doc:
+        "A description of the schema. Semantically describes the schema in general. Does not go into field-specific details."
+    )
+
     embeds_many(:fields, Field)
     # embeds_many(:embeds, __MODULE__)
   end
@@ -29,6 +35,7 @@ defmodule Scout.Schemas.Embed do
         if embed_spec.required do
           quote do
             embeds_one! unquote(name), unquote(module) do
+              @moduledoc unquote(embed_spec.description)
               (unquote_splicing(Enum.map(embed_spec.fields, &Field.generate/1)))
               # unquote_splicing(Enum.map(embed_spec.embeds, &generate_embed/1))
             end
@@ -36,6 +43,7 @@ defmodule Scout.Schemas.Embed do
         else
           quote do
             embeds_one unquote(name), unquote(module) do
+              @moduledoc unquote(embed_spec.description)
               (unquote_splicing(Enum.map(embed_spec.fields, &Field.generate/1)))
               # unquote_splicing(Enum.map(embed_spec.embeds, &generate_embed/1))
             end
@@ -46,6 +54,7 @@ defmodule Scout.Schemas.Embed do
         if embed_spec.required do
           quote do
             embeds_many! unquote(name), unquote(module) do
+              @moduledoc unquote(embed_spec.description)
               (unquote_splicing(Enum.map(embed_spec.fields, &Field.generate/1)))
               # unquote_splicing(Enum.map(embed_spec.embeds, &generate_embed/1))
             end
@@ -53,6 +62,7 @@ defmodule Scout.Schemas.Embed do
         else
           quote do
             embeds_many unquote(name), unquote(module) do
+              @moduledoc unquote(embed_spec.description)
               (unquote_splicing(Enum.map(embed_spec.fields, &Field.generate/1)))
               # unquote_splicing(Enum.map(embed_spec.embeds, &generate_embed/1))
             end
