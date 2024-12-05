@@ -189,12 +189,11 @@ defmodule Mix.Tasks.Scout.Recon do
         [
           frames: :braille,
           text: "Generating Schema…",
-          done: [IO.ANSI.green(), "✓", " Done.", IO.ANSI.reset()],
+          done: [IO.ANSI.green(), "✓ Done", IO.ANSI.reset()],
           spinner_color: IO.ANSI.magenta()
         ],
         fn ->
           Scout.recon(opts[:url],
-            create_module: false,
             api_key: api_key,
             model: model,
             create_module: opts[:create],
@@ -209,7 +208,7 @@ defmodule Mix.Tasks.Scout.Recon do
           result
 
         {:error, reason} ->
-          error(reason)
+          error(inspect(reason))
           System.halt(1)
       end
 
@@ -236,7 +235,7 @@ defmodule Mix.Tasks.Scout.Recon do
       |> Macro.to_string()
 
     if opts[:print] do
-      IO.puts(module_string)
+      Mix.shell().info(module_string)
     end
 
     if opts[:out] do

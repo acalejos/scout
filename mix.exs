@@ -23,7 +23,7 @@ defmodule Scout.MixProject do
     [
       {:req, "~> 0.5"},
       {:flint, github: "acalejos/flint", override: true},
-      {:instructor, github: "acalejos/instructor_ex"},
+      {:instructor, github: "acalejos/instructor_ex", ref: "main"},
       {:typed_ecto_schema, "~> 0.4.1"},
       # For Mix tasks
       {:progress_bar, "~>3.0", only: :dev}
